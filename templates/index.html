@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>VALHEIM RIP</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            var socket = io.connect();
+
+            socket.on('my_response', function(msg) {
+		        var log = document.getElementById('log');
+		        log.innerHTML = msg.data;
+            });
+
+            $('form#broadcast').submit(function(event) {
+                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
+                return false;
+            });
+        });
+    </script>
+    <style>
+       @font-face {
+          font-family: Norse;
+          src: url("static/Norse.otf") format("opentype");
+       }
+
+       @font-face {
+          font-family: Norse;
+	  font-weight: bold;
+          src: url("static/Norsebold.otf") format("opentype");
+       }
+
+       * {
+          font-family: Norse;
+	  margin: 0px;
+	  padding: 0px;
+       }
+
+       h1 {
+	  padding-top: 50px;
+	  color: #f0aa55;
+	  -webkit-text-stroke: 10px black;
+       }
+
+       form {
+	       margin-top: 500px;
+       }
+    </style>
+</head>
+<body>
+    <img style="float: left;" src="static/tombstone.png" /> 
+    <h1 style="font-size: 300px;">RIP: <span id="log">0</span></h1>
+</body>
+</html>
+
